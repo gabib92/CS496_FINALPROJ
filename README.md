@@ -57,10 +57,7 @@ public class CsvReader {
                     }
 
                     /**
-                     * Creates new Incidents of registration number, fatal injuries, nonfatal injuries, and distance.
-                     * Converts latitude and longitude values to a number of distance away from SDSU by using the
-                     *  distance class from LatLongConverter.java.
-                     * Add inputs to a dictionary.
+                     * Creates new Incidents
                      */
                     Incident input = new Incident(values[3],values[2],values[4],values[10]);
                     dictionary.add(input);
@@ -98,10 +95,8 @@ public class CsvReader {
         }
 
         /**
-         * Overrides toString() to convert all values found to a String in order to print
-         *  to a file.
-         * @return a line containing the registration number, number of primary injuries,
-         *  number of secondary injuries, and distance from SDSU
+         * 
+         * @return 
          */
         @Override
         public String toString() {
