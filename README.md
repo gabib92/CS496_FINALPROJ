@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CsvReader {
-    List<Incident> contents;
+    List<Game> contents;
 
     /**
      * Uses the filename user gave to load all its contents
@@ -25,7 +25,7 @@ public class CsvReader {
      * Return the contents from the list made by reading the .csv file the user gave.
      * @return the contents from the list made by reading the .csv file.
      */
-    public List<Incident> getList() {
+    public List<Game> getList() {
 
         return contents;
     }
@@ -36,9 +36,9 @@ public class CsvReader {
      * @return dictionary of inputs classified at
      * @throws IOException
      */
-    public List<Incident> loadCSV(String filename) throws IOException {
+    public List<Game> loadCSV(String filename) throws IOException {
         String line;
-        List<Incident> dictionary = new ArrayList<>();
+        List<Game> dictionary = new ArrayList<>();
 
         try(BufferedReader br = new BufferedReader(new FileReader(filename))) {
             line = br.readLine();
@@ -59,7 +59,7 @@ public class CsvReader {
                     /**
                      * Creates new Incidents
                      */
-                    Incident input = new Incident(values[3],values[2],values[4],values[10]);
+                    Game input = new Game(year,values[2],values[4],sales);
                     dictionary.add(input);
                 }
 
@@ -78,16 +78,16 @@ public class CsvReader {
     }
 
 
-    public class Incident {
-        public String year;
+    public class Game {
+        public int year;
         public String platform;
         public String genre;
-        public int sales;
+        public double sales;
 
         /**
          * Default constructor
          */
-        public Incident(String year, String platform, String genre, int sales) {
+        public Incident(int year, String platform, String genre, double sales) {
             this.year = year;
             this.platform = platform;
             this.genre = genre;
