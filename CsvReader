@@ -1,5 +1,3 @@
-# CS496_FINALPROJ
-#CsvReader
 
 package edu.sdsu.cs.util;
 
@@ -9,7 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CsvReader {
+public class CSVReader {
     List<Game> contents;
 
     /**
@@ -17,7 +15,7 @@ public class CsvReader {
      * @param filename
      * @throws IOException
      */
-    public CsvReader(String filename) throws IOException {
+    public CSVReader(String filename) throws IOException {
         contents = loadCSV(filename);
     }
 
@@ -26,7 +24,6 @@ public class CsvReader {
      * @return the contents from the list made by reading the .csv file.
      */
     public List<Game> getList() {
-
         return contents;
     }
 
@@ -45,8 +42,11 @@ public class CsvReader {
 
             while((line = br.readLine()) != null) {
                 String values[] = line.split(",");
-
-                int year;
+                
+                /**
+                 * Finds the year and changes the string to an int
+                 */
+                int year = 0;
                 if(values.length != 0) {
 
                     try {
@@ -55,17 +55,34 @@ public class CsvReader {
                     catch(NumberFormatException e) {
                         year = 0;
                     }
+                }
+                
+                /**
+                 * Finds the sales and changes the string to a double
+                 * Sales are in millions
+                 */
+                double sales = 0;
+                if(values.length != 0) {
 
-                    /**
-                     * Creates new Incidents
+                   try {
+                       sales = Double.parseDouble(values[10]);
+                   }
+                   catch(NumberFormatException e) {
+                       sales = 0;
+                   }
+                
+
+                }   
+					/**
+                     * Creates new Games
+                     * values[2] is the platform (String)
+                     * values[4] is the genre (String)
                      */
                     Game input = new Game(year,values[2],values[4],sales);
                     dictionary.add(input);
-                }
+            	
 
-                else {
-                    throw new IOException("Your file is not formatted right.");
-                }
+                
 
             }
         }
@@ -84,10 +101,12 @@ public class CsvReader {
         public String genre;
         public double sales;
 
-        /**
+       
+
+		/**
          * Default constructor
          */
-        public Incident(int year, String platform, String genre, double sales) {
+        public Game(int year, String platform, String genre, double sales) {
             this.year = year;
             this.platform = platform;
             this.genre = genre;
@@ -100,7 +119,7 @@ public class CsvReader {
          */
         @Override
         public String toString() {
-            return " ";
+            return year+" "+platform+" "+genre+" "+sales;
         }
     }
 }
