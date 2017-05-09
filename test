@@ -41,6 +41,29 @@ public class test {
             	}
             }
             
+            writer.println("\nTop 5 sales for a platform");
+            writer.println("PS3");
+            List<Game> byPlatformSub = CSVReader.subList(results, "platform", "PS3");
+            for(int i = byPlatformSub.size()-1; i>byPlatformSub.size()-6; i--) {
+        		List<Game> byPlatform = Sorts.qsort(byPlatformSub, 0, byPlatformSub.size()-1, "sales");
+        		writer.println((byPlatform.get(i).toString()));
+        	}
+            
+            writer.println("PS4");
+            List<Game> byPlatformSub2 = CSVReader.subList(results, "platform", "PS4");
+            for(int i = byPlatformSub2.size()-1; i>byPlatformSub2.size()-6; i--) {
+        		List<Game> byPlatform = Sorts.qsort(byPlatformSub2, 0, byPlatformSub2.size()-1, "sales");
+        		writer.println((byPlatform.get(i).toString()));
+        	}
+            
+            writer.println("\nTop 5 sales for a genre");
+            writer.println("Racing");
+            List<Game> byGenreSub = CSVReader.subList(results, "genre", "Racing");
+            for(int i = byGenreSub.size()-1; i>byGenreSub.size()-6; i--) {
+        		List<Game> byGenre = Sorts.qsort(byGenreSub, 0, byGenreSub.size()-1, "sales");
+        		writer.println((byGenre.get(i).toString()));
+        	}
+            
             writer.close();
 		}
 		
