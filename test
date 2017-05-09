@@ -41,8 +41,6 @@ public class test {
             	}
             }
             
-            writer.println("\nTop 5 sales for each platform");
-            
             writer.close();
 		}
 		
