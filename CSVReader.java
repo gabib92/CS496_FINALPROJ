@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import main.CSVReader.Game;
+
 public class CSVReader {
 	List<Game> contents;
 
@@ -92,200 +94,6 @@ public class CSVReader {
 
 		return dictionary;
 	}
-	
-	public static int partition(List<Game> arr, int p, int r, String type) {
-		int i = p-1;
-		Game temp;
-		//checks to sort by year
-		if(type.compareTo("year")==0) {
-			int x = arr.get(p).year;
-			for(int j = p;j<=r;j++) {
-				int toSwitch = arr.get(j).year;
-				if(toSwitch<=x) {
-					i = i+1;
-					temp = arr.get(i);
-					arr.set(i, arr.get(j));
-					arr.set(j, temp);
-				}
-			}
-			temp = arr.get(i);
-			arr.set(i+1, arr.get(r));
-			arr.set(r, temp);
-			return i+1;
-		} else if (type.compareTo("platform")==0 || type.compareTo("genre")==0 || type.compareTo("name")==0) {
-			String x = arr.get(r).platform;
-			//checks if genre then sorts
-			if(type.compareTo("genre")==0) {
-				x = arr.get(r).genre;
-				for(int j = p;j<=r;j++) {
-					if(arr.get(j).genre.compareTo(x) <=0) {
-						i = i+1;
-						temp = arr.get(i);
-						arr.set(i, arr.get(j));
-						arr.set(j, temp);
-					}
-				}
-				temp = arr.get(i);
-				arr.set(++i, arr.get(r));
-				arr.set(r, temp);
-				return i;
-			}
-			//if not sorting by genre checks to sort by name
-			else if(type.compareTo("name")==0) {
-
-				x = arr.get(r).name;
-				for(int j = p;j<=r;j++) {
-					if(arr.get(j).name.compareTo(x) <=0) {
-						i = i+1;
-						temp = arr.get(i);
-						arr.set(i, arr.get(j));
-						arr.set(j, temp);
-					}
-				}
-				temp = arr.get(i);
-				arr.set(++i, arr.get(r));
-				arr.set(r, temp);
-				return i; 
-			}	
-			//if not sorting by name/genre, sorts by platform
-			else {
-				for(int j = p;j<=r;j++) {
-					if(arr.get(j).platform.compareTo(x) <=0) {
-						i = i+1;
-						temp = arr.get(i);
-						arr.set(i, arr.get(j));
-						arr.set(j, temp);
-					}
-				}
-				temp = arr.get(i);
-				arr.set(++i, arr.get(r));
-				arr.set(r, temp);
-				return i;
-			}	
-	//sorts by sales
-	} else if(type.compareTo("sales")==0) {
-		double x = arr.get(r).sales;
-		for(int j = p;j<=r-1;j++) {
-			if(arr.get(j).sales<=x) {
-				i = i+1;
-				temp = arr.get(i);
-				arr.set(i, arr.get(j));
-				arr.set(j, temp);
-			}
-		}
-		temp = arr.get(i);
-		arr.set(++i, arr.get(r));
-		arr.set(r, temp);
-		return i;
-	} else return -1;
-}
-
-public static List<Game> qsort(List<Game> arr, int p, int r, String type) {
-	if(p<r) {
-		int q = partition(arr,p,r,type);
-		qsort(arr,p,q-1,type);
-		qsort(arr,q+1,r,type);
-	}
-	return arr;
-}
-
-public static List<Game> sort(List<Game> arr, String type) {
-	int size = arr.size();
-	List<Game> temp = new ArrayList<Game>();
-	return mergesort(arr,temp,0,size-1,type);
-}
-
-private static List<Game> mergesort(List<Game> arr, List<Game> temp,int low,int high, String type) {
-	temp = new ArrayList<Game>();
-	for(int i=0;i<=high;i++)
-		temp.add(arr.get(i));
-	if(low<high) {
-		int middle = low + (high-low)/2;
-		mergesort(arr,temp,low,middle,type);
-		mergesort(arr,temp,middle+1,high,type);
-		List<Game> ret = merge(arr,temp,low, middle,high,type);
-		return ret;
-	} else return arr;
-}
-
-public static List<Game> merge(List<Game> arr, List<Game> temp, int low, int middle, int high, String type) {
-	
-	int i,j,k,tempType;
-	i = low;
-	j = middle+1;
-	k = low;
-	switch(type) {
-	case "name": tempType = 1;
-	break;
-	case "year": tempType = 2;
-	break;
-	case "platform": tempType = 3;
-	break;
-	case "genre": tempType = 4;
-	break;
-	case "sales": tempType = 5;
-	break;
-	default: tempType = -1;
-	}
-	
-	while(i<=middle && j<=high) {
-		if(tempType == 1) {
-			if(temp.get(i).name.compareTo(temp.get(j).name)<=0) {
-				arr.set(k, temp.get(j));
-				i++;
-			} else {
-				arr.set(k, temp.get(j));
-				j++;
-			}
-			k++;
-		} else if(tempType == 2) {
-			if(temp.get(i).year<=temp.get(j).year) {
-				arr.set(k, temp.get(j));
-				i++;
-			} else {
-				arr.set(k, temp.get(j));
-				j++;
-			}
-			k++;
-		} else if(tempType == 3) {
-			if(temp.get(i).platform.compareTo(temp.get(j).platform)<=0) {
-				arr.set(k, temp.get(j));
-				i++;
-			} else {
-				arr.set(k, temp.get(j));
-				j++;
-			}
-			k++;
-		} else if(tempType == 4) {
-			if(temp.get(i).genre.compareTo(temp.get(j).genre)<=0) {
-				arr.set(k, temp.get(j));
-				i++;
-			} else {
-				arr.set(k, temp.get(j));
-				j++;
-			}
-			k++;
-		} else if(tempType == 5) {
-			if(temp.get(i).sales<=temp.get(j).sales) {
-				arr.set(k, temp.get(j));
-				i++;
-			} else {
-				arr.set(k, temp.get(j));
-				j++;
-			}
-			k++;
-		} else {
-			return null;
-		}
-	}
-	
-	while(i<=middle){
-		arr.set(k, temp.get(i));
-		k++;
-		i++;
-	} 
-	return arr;
-}
 
 public static List<Game> subList(List<Game> arr, String splitOn, String type) {
 	List<Game> temp = new ArrayList<Game>();
@@ -307,6 +115,7 @@ public static List<Game> subList(List<Game> arr, String splitOn, String type) {
 	}
 	return temp;
 }
+
 	public class Game {
 		public String name;
 		public int year;
