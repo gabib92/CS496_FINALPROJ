@@ -94,7 +94,14 @@ public class CSVReader {
 
 		return dictionary;
 	}
-
+/**
+ * 
+ * @param arr the original list to be split
+ * @param splitOn which of the 5 categories to split the list by.
+ * @param type what specifically to split the list by (ie. "Wii" would take all Wii games and put them
+ * 			   in a list)
+ * @return returns the split list
+ */
 public static List<Game> subList(List<Game> arr, String splitOn, String type) {
 	List<Game> temp = new ArrayList<Game>();
 	for(int i=0;i<arr.size();i++) {
@@ -115,7 +122,10 @@ public static List<Game> subList(List<Game> arr, String splitOn, String type) {
 	}
 	return temp;
 }
-
+/**
+ * 
+ *  game class is what we are reading all the data into
+ */
 	public class Game {
 		public String name;
 		public int year;
@@ -139,7 +149,7 @@ public static List<Game> subList(List<Game> arr, String splitOn, String type) {
 
 	/**
 	 * 
-	 * @return 
+	 * @return string of all parts of game.
 	 */
 	@Override
 	public String toString() {
