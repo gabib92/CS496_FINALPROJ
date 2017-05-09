@@ -19,23 +19,30 @@ public class test {
 			
             writer.println("\nTop 5 and Low 5 of global sales");
             List<Game> bySales = Sorts.qsort(results, 0, results.size()-1, "sales");
-            for(int i = 5; i > 0; i--){
+            for(int i = bySales.size()-1; i>bySales.size()-6; i--){
                 writer.println((bySales.get(i)).toString());
             }
             writer.println("...");
-            for(int i = bySales.size()-5; i<bySales.size(); i++) {
+            for(int i = 5; i>0; i--) {
                 writer.println(bySales.get(i).toString());
             }
             
             writer.println("\nTop 5 sales for each year");
-            for(int i = 1990; i < 1993; i++) {
+            //Changes the year for each sublist
+            for(int i = 1980; i < 2017; i++) {
             	String num = Integer.toString(i);
             	List<Game> byYearSub = CSVReader.subList(results, "year", num);
-            	for(int j = 3; j > 0; j--) {
-            		List<Game> byYear = Sorts.qsort(byYearSub, 0, byYearSub.size()-1, "year");
+            	writer.println(num);
+            	
+            	//Displays the top 5 sales for that year
+            	for(int j = byYearSub.size()-1; j>byYearSub.size()-6; j--) {
+            		List<Game> byYear = Sorts.qsort(byYearSub, 0, byYearSub.size()-1, "sales");
             		writer.println((byYear.get(j).toString()));
             	}
             }
+            
+            writer.println("\nTop 5 sales for each platform");
+            
             writer.close();
 		}
 		
